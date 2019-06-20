@@ -1,0 +1,58 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~material-design-icons/iconfont/material-icons.css';
+@import '~@angular/material/theming';
+@import url('https://fonts.googleapis.com/css?family=PT+Sans&display=swap');
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,800,700,300);
+@import url(https://fonts.googleapis.com/css?family=Squada+One);
+
+
+@include mat-core();
+
+$primary: mat-palette($mat-indigo, 700, 300, 900);
+$accent:  mat-palette($mat-pink, 500, A200, A400);
+$warn:    mat-palette($mat-red, 500);
+
+$config: mat-typography-config();
+
+$theme: mat-light-theme($primary, $accent, $warn);
+
+$dark-primary: mat-palette($mat-blue-grey);
+$dark-accent:  mat-palette($mat-amber, A200, A100, A400);
+$dark-warn:    mat-palette($mat-deep-orange);
+$dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+@include angular-material-theme($theme);
+
+.unicorn-dark-theme {
+    @include angular-material-theme($dark-theme);
+  }
+
+body, html {
+    height: 100%;
+    margin: 0 auto;
+}
+
+body {
+    font-family: 'Montserrat';
+    font-size: 18px;
+}
+
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 30% auto;
+}
+
+section {
+    width: 80%;
+    margin: 0 auto;
+    padding: 2em;
+}

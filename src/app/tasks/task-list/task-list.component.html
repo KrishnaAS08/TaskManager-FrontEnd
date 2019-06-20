@@ -1,0 +1,78 @@
+<div class="container mat-elevation-z8">
+  <div class="form-search">
+      <mat-form-field id="search" floatPlaceholder="never" color="accent">
+        <input matInput autocomplete="off" [(ngModel)]="taskSearch" placeholder="Task: ">
+      </mat-form-field>
+      <mat-form-field id="search" floatPlaceholder="never" color="accent">
+        <input matInput autocomplete="off" [(ngModel)]="parentTaskSearch" placeholder="Parent Task: ">
+      </mat-form-field>
+  </div>
+</div>
+<br />
+
+<div class="container mat-elevation-z8">
+  <div class="form">
+      <mat-form-field floatPlaceholder="never" color="accent">
+        <input matInput autocomplete="off" [(ngModel)]="priorityFrom"placeholder="Priority From:">
+      </mat-form-field>
+      <mat-form-field floatPlaceholder="never" color="accent">
+        <input matInput autocomplete="off" [(ngModel)]="priorityTo"placeholder="Priority To:">
+      </mat-form-field>
+      <mat-form-field floatPlaceholder="never" color="accent">
+        <input matInput autocomplete="off" [(ngModel)]="startDateSearch" placeholder="Start Date: ">
+      </mat-form-field>
+      <mat-form-field floatPlaceholder="never" color="accent">
+        <input matInput autocomplete="off" [(ngModel)]="endDateSearch" placeholder="End Date: ">
+      </mat-form-field>
+  </div>
+</div>
+
+<div *ngFor="let task of tasks | taskPipe : taskSearch:parentTaskSearch | slice">
+<div *ngIf="isUpdate">
+  <table id="tasktable">
+    <thead>
+      <tr>
+        <th>Task</th>       
+        <th>Parent</th>
+        <th>Priority</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody  id="tasks" align="center">          
+      <tr>
+        <td>
+           <mat-card class="card">{{task.taskName}}
+            </mat-card>
+        </td>
+                      
+        <td>
+           <mat-card class="card">{{((task.parentName) ? task.parentName : 'NO Parent')}}
+           </mat-card>
+        </td>             
+        <td>{{task.priority}}</td>
+        <td>{{task.startDate | date: 'dd/MM/yyyy'}}</td>
+        <td>{{task.endDate | date: 'dd/MM/yyyy'}}</td>
+        <td>
+          <button *ngIf="task.status != 'completed'" mat-icon-button color="accent" [disabled]="task.status === 'completed'">
+            <a [routerLink]="['edit',task.id]">
+              <mat-icon aria-label="Edit">edit</mat-icon></a>
+          </button>
+          <button *ngIf="task.status === 'completed'" mat-icon-button color="accent" [disabled]="task.status === 'completed'">
+                <mat-icon aria-label="Edit">edit</mat-icon>
+            </button>
+          <button mat-icon-button color="accent" (click)="endTask(task.id, task.taskName, task.parentName,
+            task.priority, task.startDate, task.endDate, task.parentId, task.status)">
+            <mat-icon aria-label="End">close</mat-icon>
+          </button>
+        </td>
+        
+      </tr>
+    </tbody>
+        
+    <mat-divider></mat-divider>
+  </table>    
+</div>
+
+</div>

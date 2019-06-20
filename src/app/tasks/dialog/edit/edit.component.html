@@ -1,0 +1,63 @@
+<div class="container">
+  
+    <form #formControl="ngForm" (ngSubmit)="submit">
+  
+        <div class="form">
+            <mat-form-field floatLabel="auto" hideRequiredMarker appearance="fill">
+              <mat-label id="label">Task</mat-label>
+              <input matInput [(ngModel)]="task.taskName" name="taskName" required autocomplete="off" >
+              <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="form"> 
+            <mat-label id="label">Priority</mat-label>
+            <mat-slider
+                class="slider-margin"
+                [max]="max"
+                [min]="min"
+                [step]="step"
+                [thumbLabel]="thumbLabel"
+                [(ngModel)]="task.priority"
+                name = "priority"
+                [vertical]="vertical">
+            </mat-slider>
+        </div>
+
+        <div class="form">
+            <mat-form-field floatLabel="auto" appearance="fill">
+              <mat-label id="label">Parent Task</mat-label>
+              <input matInput [value]="task.parentName" readonly autocomplete="off" name="parentTask" >
+            </mat-form-field>
+            <button type="button" mat-icon-button color="primary" (click)="getParentList()">
+                <i class="material-icons">
+                    search
+                </i>
+            </button>
+        </div>
+        
+        <div class="form">
+            <mat-form-field floatLabel="auto" hideRequiredMarker appearance="fill">
+              <mat-label id="label">Start Date</mat-label>
+              <input matInput [matDatepicker]="picker1"[(ngModel)]="task.startDate" name="startDate"
+                autocomplete="off" readonly>
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1 ></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <div class="form">
+            <mat-form-field floatLabel="auto" hideRequiredMarker appearance="fill">
+              <mat-label id="label">End Date</mat-label>
+              <input [min]="task.startDate" matInput [matDatepicker]="picker2"[(ngModel)]="task.endDate" name="endDate"
+                autocomplete="off" readonly>
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <button routerLink="/tasks" mat-button [type]="submit" [disabled]="!formControl.valid" (click)="doneEdit(task.id)">
+          Save</button>
+        <button mat-button [type]="submit" routerLink="/tasks">Cancel</button>
+    </form>
+  </div>

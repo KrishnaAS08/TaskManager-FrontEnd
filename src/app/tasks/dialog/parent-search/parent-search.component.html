@@ -1,0 +1,35 @@
+<div class="container">
+    <h3 mat-dialog-title>Select Parent Task</h3>
+
+    <div class="container mat-elevation-z8">
+
+      <div class="form">
+        <mat-form-field fxFlex="40%">
+            <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+    </div>
+  
+      <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+
+        <ng-container matColumnDef="parentId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Parent Task Id</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.parentId}}</mat-cell>
+        </ng-container>
+    
+    
+        <ng-container matColumnDef="parentTask">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Parent Task Name</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.parentTask}}</mat-cell>
+        </ng-container>
+    
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"
+            (click)="onRowClicked(row)"></mat-row>
+      </mat-table>
+
+      <mat-paginator [pageSizeOptions]="[3, 10, 25, 100]"></mat-paginator>
+
+    <div mat-dialog-actions>
+      <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+    </div>
+</div>

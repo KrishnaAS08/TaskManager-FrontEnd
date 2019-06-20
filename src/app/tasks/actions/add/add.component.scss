@@ -1,0 +1,41 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    min-width: 450px;
+  }
+    
+  .container > * {
+    width: 60%;
+   }
+    
+  .form {
+    display: flex;
+    padding-top: 6px;
+  }
+    
+  .mat-form-field {
+    font-size: 16px;
+    font-family: 'Montserrat';
+    flex-grow: 1;
+  }
+
+  #label {
+    text-transform: uppercase;
+  }
+
+  #check-box {
+    margin-left: 400px;
+  }
+
+  .slider-margin {
+    margin: 10px;
+  }
+
+  .mat-slider-horizontal {
+    width: 300px;
+  }
+  
+  .mat-slider-horizontal {
+    width: 450px;
+  }
+  

@@ -1,0 +1,25 @@
+<div>
+    <h3 class="dialog" mat-dialog-title>Are you sure?</h3>
+    <div mat-dialog-content>
+      <b>Task: </b> 
+      <i>{{task.taskName}}</i>
+      <p></p>
+      <b>Parent: </b>
+      <i>{{((task.parentName) ? task.parentName : 'NO Parent')}}</i>
+      <p></p>
+      <b>Priority: </b>
+      <i>{{task.priority}}</i>
+      <p></p>
+      <b>Start Date: </b>
+      <i>{{task.startDate | date: 'dd/MM/yyyy'}}</i>
+      <p></p>
+      <b>End Date: </b>
+      <i>{{task.endDate | date: 'dd/MM/yyyy'}}</i>
+      <p></p>
+    </div>
+  
+    <div mat-dialog-actions>
+      <button mat-button [mat-dialog-close]="1" (click)="confirmEndTask()">End Task</button>
+      <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+    </div>
+</div>

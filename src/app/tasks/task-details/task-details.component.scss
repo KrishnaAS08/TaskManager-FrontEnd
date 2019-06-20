@@ -1,0 +1,22 @@
+#tasks {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    background-color: lavender
+}
+#tasktable {
+    width: 100%;
+}
+
+.card {
+    background-color: darkgray;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    max-width: 100px ;
+}
+.parentwidth {
+    width: 200px;
+}
+
+.prioritywidth {
+    width: 50px;
+}

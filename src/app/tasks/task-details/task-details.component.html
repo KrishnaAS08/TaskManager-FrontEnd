@@ -1,0 +1,22 @@
+<div *ngIf="task">
+    <mat-card id="tasks">
+          <tbody align="left">
+            <tr>
+                <td class="parentwidth">
+                  <mat-card class="card">{{task.taskName}}
+                  </mat-card>
+                </td>
+              
+                <td class="parentwidth">
+                  <mat-card class="card">{{((task.parentName) ? task.parentName : 'This Task has NO Parent')}}
+                  </mat-card>
+                </td>             
+              <td class="prioritywidth">{{task.priority}}</td>
+              <td class="parentwidth">{{task.startDate | date: 'dd/MM/yyyy'}}</td>
+              <td class="parentwidth">{{task.endDate | date: 'dd/MM/yyyy'}}</td>
+              <td class="parentwidth"></td>
+            </tr>
+          </tbody>
+    </mat-card><br />
+    <mat-divider></mat-divider>
+</div>
