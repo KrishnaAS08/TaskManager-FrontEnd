@@ -5,10 +5,9 @@ import { Task } from '../models/task';
   name: 'taskPipe'
 })
 export class TaskPipe implements PipeTransform {
-  
-  filteredData: Task[];
 
-  transform(tasks: Task[], taskSearch: String,parentTaskSearch: String, startDateSearch:Date, endDateSearch: Date): Task[] {
+  transform(tasks: Task[], taskSearch: String,parentTaskSearch: String, priorityFrom: number,
+     priorityTo: number, startDateSearch:Date, endDateSearch: Date): Task[] {
     if(tasks && tasks.length) {
       return tasks.filter(
         task=> {
@@ -21,10 +20,21 @@ export class TaskPipe implements PipeTransform {
           if(parentTaskSearch && task.parentName.toLowerCase().indexOf(parentTaskSearch.toLowerCase()) === -1){
             return false;
           }
-          if(startDateSearch && task.startDate==startDateSearch) {
+          if(startDateSearch && !(startDateSearch.toDateString() === (new Date(task.startDate)).toDateString())){
             return false;
           }
-          
+          if(endDateSearch && !(endDateSearch.toDateString() === (new Date(task.endDate)).toDateString())){
+            return false;
+          }
+          if(priorityFrom && priorityTo && !(task.priority>=priorityFrom) && (task.priority<=priorityTo)){
+            return false;
+          }
+          else if(priorityFrom && !(task.priority>=priorityFrom)){
+            return false;
+          }
+          else if(priorityTo && !(task.priority<=priorityTo)){
+            return false;
+          }
           return true;
         })
     }

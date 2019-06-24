@@ -1,10 +1,9 @@
-import { Component, OnInit, Inject, ViewChild, Input } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
-import { TaskListComponent } from '../../task-list/task-list.component';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { Task } from '../../models/task';
 import { TaskService } from '../../services/task.service';
 import { FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ParentSearchComponent } from '../parent-search/parent-search.component';
 
@@ -26,8 +25,7 @@ export class EditComponent implements OnInit {
   value = 0;
   vertical = false;
 
-  constructor(public dialog: MatDialog, public taskService: TaskService, private route: ActivatedRoute,
-    private router: Router) { }
+  constructor(public dialog: MatDialog, public taskService: TaskService, private route: ActivatedRoute) { }
 
   formControl = new FormControl('', [
     Validators.required
@@ -36,17 +34,12 @@ export class EditComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.id = Number.parseInt(params['id']);
-      console.log('id>>>',this.id);
    });
     
     this.taskService.getTaskById(this.id)
       .subscribe(
         data => {
-          console.log('Task by ID>>>',data);
           this.task = data;
-        },
-        error => {
-          console.log('ERROR: ',error);
         }
       );
 
@@ -67,16 +60,7 @@ export class EditComponent implements OnInit {
   }
 
   doneEdit(id: number): void {
-    this.taskService.updateTask(id,
-      this.task)
-      .subscribe(
-        data => {
-          console.log('Updated Task>>>',data);
-        },
-        error => {
-          console.log('ERROR: ',error);
-        }
-      );
+    this.taskService.updateTask(id, this.task).subscribe();
   }
 
 }

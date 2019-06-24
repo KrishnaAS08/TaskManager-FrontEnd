@@ -12,6 +12,7 @@
     display: flex;
     flex-direction: column;
     width:100%;
+    background-color:  rgba(201, 201, 212, 0.767);
   }
   #search {
       width: 500px;
@@ -28,6 +29,9 @@
     border-bottom: 1px solid transparent;
     
   }
+
+    
+  
 
   .form-search {
     min-height: 56px;

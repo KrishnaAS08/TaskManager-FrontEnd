@@ -55,12 +55,9 @@ export class ParentSearchComponent implements OnInit {
           this.dataSource = new MatTableDataSource<ParentTask>(data);
           this.dataSource.paginator = this.paginator;  
           this.dataSource.sort = this.sort;
-        },
-        (error: HttpErrorResponse) => {
-          console.log (error.name + ' ' + error.message);
         }
       );
-  
+    
   }
 
 }

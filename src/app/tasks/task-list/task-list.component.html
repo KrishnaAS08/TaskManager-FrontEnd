@@ -19,15 +19,21 @@
         <input matInput autocomplete="off" [(ngModel)]="priorityTo"placeholder="Priority To:">
       </mat-form-field>
       <mat-form-field floatPlaceholder="never" color="accent">
-        <input matInput autocomplete="off" [(ngModel)]="startDateSearch" placeholder="Start Date: ">
+        <input matInput [matDatepicker]="picker1" [(ngModel)]="startDateSearch" placeholder="Start Date: "
+          (click)="searchstartDate()" autocomplete="off" readonly>
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1 ></mat-datepicker>
       </mat-form-field>
       <mat-form-field floatPlaceholder="never" color="accent">
-        <input matInput autocomplete="off" [(ngModel)]="endDateSearch" placeholder="End Date: ">
+        <input matInput [matDatepicker]="picker2"[(ngModel)]="endDateSearch" placeholder="End Date: "
+          autocomplete="off" readonly>
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2 ></mat-datepicker>
       </mat-form-field>
   </div>
 </div>
 
-<div *ngFor="let task of tasks | taskPipe : taskSearch:parentTaskSearch | slice">
+<div *ngFor="let task of searchTasks | taskPipe : taskSearch:parentTaskSearch:priorityFrom:priorityTo:startDateSearch:endDateSearch">
 <div *ngIf="isUpdate">
   <table id="tasktable">
     <thead>
@@ -56,13 +62,13 @@
         <td>{{task.endDate | date: 'dd/MM/yyyy'}}</td>
         <td>
           <button *ngIf="task.status != 'completed'" mat-icon-button color="accent" [disabled]="task.status === 'completed'">
-            <a [routerLink]="['edit',task.id]">
+            <a [routerLink]="['edit',task.taskId]">
               <mat-icon aria-label="Edit">edit</mat-icon></a>
           </button>
           <button *ngIf="task.status === 'completed'" mat-icon-button color="accent" [disabled]="task.status === 'completed'">
                 <mat-icon aria-label="Edit">edit</mat-icon>
             </button>
-          <button mat-icon-button color="accent" (click)="endTask(task.id, task.taskName, task.parentName,
+          <button mat-icon-button color="accent" (click)="endTask(task.taskId, task.taskName, task.parentName,
             task.priority, task.startDate, task.endDate, task.parentId, task.status)">
             <mat-icon aria-label="End">close</mat-icon>
           </button>

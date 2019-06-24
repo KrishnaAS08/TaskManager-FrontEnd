@@ -56,7 +56,7 @@
             </mat-form-field>
         </div>
 
-        <button routerLink="/tasks" mat-button [type]="submit" [disabled]="!formControl.valid" (click)="doneEdit(task.id)">
+        <button routerLink="/tasks" mat-button [type]="submit" [disabled]="!formControl.valid" (click)="doneEdit(task.taskId)">
           Save</button>
         <button mat-button [type]="submit" routerLink="/tasks">Cancel</button>
     </form>

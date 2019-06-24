@@ -44,15 +44,13 @@ export class AddComponent implements OnInit {
   saveTask() {
     if(this.isParent) {
       this.parentTask.parentTaskName = this.task.taskName;
-      this.taskService.addParentTask(this.parentTask)
-        .subscribe(data => console.log('ParentTask>>>',data), error => console.log(error));
+      this.taskService.addParentTask(this.parentTask).subscribe();
       this.parentTask = new ParentTask();
       this.task = new Task();
     }
     else {
       this.task.status = 'not-completed';
-      this.taskService.addTask(this.task)
-        .subscribe(data => console.log('Task>>>',data), error => console.log(error));
+      this.taskService.addTask(this.task).subscribe();
       this.task = new Task();
     }
     

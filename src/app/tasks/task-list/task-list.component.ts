@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Task } from '../models/task';
-import { MatTableDataSource, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { TaskService } from '../services/task.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { EditComponent } from '../dialog/edit/edit.component';
 import { EndComponent } from '../dialog/end/end.component';
-import { FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 
@@ -21,11 +18,12 @@ export class TaskListComponent implements OnInit {
   id: number;
 
   tasks: Observable<Task[]>;
+  searchTasks: Task[];
   taskSearch: String;
   parentTaskSearch: String;
   priorityFrom: number;
   priorityTo: number;
-  startDateSearch: Date;
+  startDateSearch:Date;
   endDateSearch: Date;
   edittask: Task;
 
@@ -40,11 +38,8 @@ export class TaskListComponent implements OnInit {
     this.taskService.getTaskList()
       .subscribe(
         data => {
-          console.log('TaskList>>>',data);
           this.tasks = data;
-        },
-        (error: HttpErrorResponse) => {
-          console.log (error.name + ' ' + error.message);
+          this.searchTasks = data;
         }
       );
       
@@ -55,10 +50,10 @@ export class TaskListComponent implements OnInit {
     this.edittask = selectTask;
   }
 
-  endTask(id: number, taskName: string, parentName: String, priority: number,
+  endTask(taskId: number, taskName: string, parentName: String, priority: number,
     startDate: Date, endDate: Date, parentId: number, status: String) {
     const dialogRef = this.dialog.open(EndComponent, {
-      data: {id: id, taskName: taskName, parentName: parentName,priority: priority, startDate: startDate,
+      data: {taskId: taskId, taskName: taskName, parentName: parentName,priority: priority, startDate: startDate,
          endDate: endDate, parentId: parentId, status: status}
     });
 

@@ -8,7 +8,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AddComponent } from './tasks/actions/add/add.component';
-import { TaskDetailsComponent } from './tasks/task-details/task-details.component';
 import { TaskListComponent } from './tasks/task-list/task-list.component';
 import { MaterialModule } from './material/material.module';
 import { ParentSearchComponent } from './tasks/dialog/parent-search/parent-search.component';
@@ -24,7 +23,6 @@ import { TaskPipe } from './tasks/pipe/task-pipe.pipe';
     AddComponent,
     EditComponent,
     EndComponent,
-    TaskDetailsComponent,
     TaskListComponent,
     ParentSearchComponent,
     TaskPipe

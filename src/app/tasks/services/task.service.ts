@@ -34,9 +34,6 @@ export class TaskService {
       .subscribe(
         data => {
           this.dataChange.next(data);
-        },
-        (error: HttpErrorResponse) => {
-          console.log (error.name + ' ' + error.message);
         }
       );
   }
@@ -46,9 +43,6 @@ export class TaskService {
       .subscribe(
         data => {
           this.parentDataChange.next(data);
-        },
-        (error: HttpErrorResponse) => {
-          console.log (error.name + ' ' + error.message);
         }
       );
   }
@@ -76,13 +70,13 @@ export class TaskService {
     return this.http.post(`${this.baseUrl}` + '/parentTasks' + `/addTask`, parentTask);
   }
 
-  updateTask(id: number, task: Task): Observable<any> {
+  updateTask(taskId: number, task: Task): Observable<any> {
     this.dialogData = task;
-    return this.http.put(`${this.baseUrl}` + '/tasks' + `/updateTask` + `/${id}`, task);
+    return this.http.put(`${this.baseUrl}` + '/tasks' + `/updateTask` + `/${taskId}`, task);
   }
 
 
-  deleteTask(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}` + '/tasks' + `/deleteTask` + `/${id}`, { responseType: 'text' });
+  deleteTask(taskId: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}` + '/tasks' + `/deleteTask` + `/${taskId}`, { responseType: 'text' });
   }
 }

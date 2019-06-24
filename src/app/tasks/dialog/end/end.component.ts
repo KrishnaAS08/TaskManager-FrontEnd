@@ -23,16 +23,7 @@ export class EndComponent implements OnInit {
 
   confirmEndTask(): void {
     this.task.status = 'completed';
-    console.log('This Task>>',this.task);
-    this.taskService.updateTask(this.task.id,this.task)
-      .subscribe(
-        data => {
-          console.log('Completed Task',data);
-        },
-        error => {
-          console.log('ERROR: ',error);
-        }
-      );
+    this.taskService.updateTask(this.task.taskId,this.task).subscribe();
   }
 
 }
