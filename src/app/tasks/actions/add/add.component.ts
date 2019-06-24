@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { Task } from '../../models/task';
 import { TaskService } from '../../services/task.service';
 import { ParentTask } from '../../models/parent-task';
@@ -23,39 +23,27 @@ export class AddComponent implements OnInit {
   thumbLabel = true;
   value = 0;
   vertical = false;
+  myForm: FormGroup;
 
   parentTask: ParentTask = new ParentTask();
   parentTaskList: ParentTask[] = [];
 
-  constructor(public dialog: MatDialog, private taskService: TaskService) { }
+  constructor(public dialog: MatDialog, private taskService: TaskService,private fb: FormBuilder) {
 
-  formControl = new FormControl('', [
-    Validators.required
-    ]);
+    this.myForm = fb.group({
+      'name': ['', Validators.required],
+      'priority': [null, Validators.required],
+      'parentTask':null,
+      'startDate': new Date(),
+      'endDate': new Date(new Date().getTime() +86400000),
+      'isParent': false
+    })
+  }
+
+  
   ngOnInit() {
-    this.task.startDate = new Date();
-    this.task.endDate = new Date((this.task.startDate.getTime() + 86400000));
   }
 
-  getErrorMessage() {
-    return this.formControl.hasError('required') ? 'Required field':'';
-  }
-
-  saveTask() {
-    if(this.isParent) {
-      this.parentTask.parentTaskName = this.task.taskName;
-      this.taskService.addParentTask(this.parentTask).subscribe();
-      this.parentTask = new ParentTask();
-      this.task = new Task();
-    }
-    else {
-      this.task.status = 'not-completed';
-      this.taskService.addTask(this.task).subscribe();
-      this.task = new Task();
-    }
-    
-    this.isParent = false;
-  }
   getParentList() :Observable<any>{
     const dialogRef = this.dialog.open(ParentSearchComponent);
     dialogRef.afterClosed().subscribe(result => {
@@ -67,8 +55,25 @@ export class AddComponent implements OnInit {
     return dialogRef.afterClosed();
   }
 
-  onSubmit() {    
-    this.saveTask();
+  onSubmit() { 
+    if(this.isParent) {
+      this.parentTask.parentTaskName = this.myForm.value.name;
+      this.taskService.addParentTask(this.parentTask).subscribe();
+      this.parentTask = new ParentTask();
+    }
+    else {
+      this.task.taskName = this.myForm.value.name;
+      this.task.priority = this.myForm.value.priority;
+      this.task.startDate = this.myForm.value.startDate;
+      this.task.endDate = this.myForm.value.endDate;
+      this.task.status = 'not-completed';
+      this.taskService.addTask(this.task).subscribe();
+      this.task = new Task();
+
+    }
+
+    this.myForm.reset();
+    this.isParent = false;
   }
 
   onClick() {

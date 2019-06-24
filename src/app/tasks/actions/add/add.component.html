@@ -1,17 +1,17 @@
 <div class="container">
   
-    <form #formControl="ngForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
   
       <div class="form">
         <mat-form-field floatLabel="auto" hideRequiredMarker appearance="fill">
           <mat-label id="label">Task</mat-label>
-          <input matInput [(ngModel)]="task.taskName" name="taskName" required autocomplete="off" >
-          <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+          <input formControlName="name" matInput autocomplete="off" >
+          <mat-error *ngIf="!myForm.get('name').valid && myForm.get('name').touched">Required field</mat-error>
         </mat-form-field>
       </div>
 
       <div>
-          <mat-checkbox id="check-box" (click)="onClick()">
+          <mat-checkbox formControlName="isParent" id="check-box" (click)="onClick()">
             Parent Task
           </mat-checkbox>
         </div>
@@ -25,8 +25,7 @@
         [min]="min"
         [step]="step"
         [thumbLabel]="thumbLabel"
-        [(ngModel)]="task.priority"
-        name = "priority"
+        formControlName="priority"
         [vertical]="vertical">
     </mat-slider>
       </div>
@@ -34,9 +33,9 @@
       <div class="form">
         <mat-form-field floatLabel="auto" appearance="fill">
           <mat-label id="label">Parent Task</mat-label>
-          <input [disabled]="isParent" matInput [value]="parentTask.parentTask === undefined ? '': parentTask.parentTask" readonly autocomplete="off" name="parentTask" >
+          <input formControlName="parentTask" [disabled]="isParent" matInput [value]="parentTask.parentTask === undefined ? '': parentTask.parentTask" readonly autocomplete="off">
         </mat-form-field>
-        <button type="button" mat-icon-button color="primary" (click)="getParentList()">
+        <button [disabled]="isParent" type="button" mat-icon-button color="primary" (click)="getParentList()">
             <i class="material-icons">
                 search
             </i>
@@ -46,7 +45,7 @@
       <div class="form">
           <mat-form-field floatLabel="auto" hideRequiredMarker appearance="fill">
             <mat-label id="label">Start Date</mat-label>
-            <input [disabled]="isParent" matInput [matDatepicker]="picker1"[(ngModel)]="task.startDate" name="startDate"
+            <input formControlName="startDate" [disabled]="isParent" matInput [matDatepicker]="picker1"
               autocomplete="off" readonly>
             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1 ></mat-datepicker>
@@ -56,13 +55,13 @@
       <div class="form">
         <mat-form-field floatLabel="auto" hideRequiredMarker appearance="fill">
           <mat-label id="label">End Date</mat-label>
-          <input [disabled]="isParent" [min]="task.startDate" matInput [matDatepicker]="picker2"[(ngModel)]="task.endDate" name="endDate"
+          <input formControlName="endDate" [min]="myForm.value.startDate" [disabled]="isParent"  matInput [matDatepicker]="picker2"
             autocomplete="off" readonly>
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
       </div>
-        <button *ngIf="!isParent" mat-button [type]="submit" [disabled]="!formControl.valid" >Save</button>
-        <button *ngIf="isParent" mat-button [type]="submit" [disabled]="!task.taskName" >Save</button>
+        <button *ngIf="!isParent" mat-button [type]="submit" [disabled]="!myForm.valid" >Save</button>
+        <button *ngIf="isParent" mat-button [type]="submit" [disabled]="!myForm.get('name').valid" >Save</button>
     </form>
   </div>
